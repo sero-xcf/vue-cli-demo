@@ -10,6 +10,8 @@ import 'mint-ui/lib/style.css'
 
 import "./styles/common.css"
 import "./libs/mui/css/mui.css"
+import "./libs/mui/css/icons-extra.css"
+
 
 import { Header } from 'mint-ui';
 
