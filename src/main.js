@@ -3,7 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import vueResource from "vue-resource"
+Vue.use(vueResource)
 import Mint from 'mint-ui'
 Vue.use(Mint)
 import 'mint-ui/lib/style.css'
