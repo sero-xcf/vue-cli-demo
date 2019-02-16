@@ -2,10 +2,10 @@
     <div class="cmt-container">
        <h3>发表评论</h3>
        <hr>
-       <textarea placeholder="请输入要BB的内容(最多BB120个字)" maxlength="120">
+       <textarea placeholder="请输入要BB的内容(最多BB120个字)" maxlength="120" v-model="commentConent">
            
        </textarea>
-       <mt-button type="primary" size="large">发表评论</mt-button>
+       <mt-button type="primary" size="large" @click="postComment">发表评论</mt-button>
         <div class=cmt-list>
             <div class=cmt-item v-for="(item, i) in comments" :key="item.add_time">
                 <div class=cmt-title>
@@ -23,34 +23,59 @@
     </div>
 </template>
 <script>
+import {Toast} from "mint-ui"
 export default {
     data(){
         return {
          pageindex :1,
-         comments:[]
+         comments:[],
+         commentConent:""
          
         }
     },
     created(){
-        this.getcomments()
+        this.getComments()
     },
     methods:{
-        getcomments(){
+        getComments(){
           this.$http.get("getcomments/"+this.id+"?pageindex="+this.pageindex).then(result=>{
-              console.log(result)
+            //   console.log(result)
               this.comments = this.comments.concat(result.body.message)
 
           })
         },
         getmore(){
             this.pageindex++
-            this.getcomments()
+            this.getComments()
+        },
+        postComment(){
+          if(this.commentConent.trim().length === 0) return Toast("评论内容不能为空哦")
+          this.$http.post("postcomment/"+this.id,{content:this.commentConent}).then(result=>{
+            //   console.log(result.body)
+            Toast(result.body.message)
+            // this.comments.unshift({
+            //     add_time:Date.now(),
+            //     content:this.commentConent,
+            //     user_name:"匿名用户"
+            // })
+            //原有的数据需要清空，否则会出现重复拼接
+            this.comments=[]
+            this.pageindex =1
+            this.getComments()
+            this.commentConent=""
+
+            
+          
+            
+
+          })
+          
         }
     },
     props:["id"]
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
    .cmt-container{
        h3{
            font-size:18px;

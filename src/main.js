@@ -27,6 +27,9 @@ import moment from "moment"
 Vue.filter("dateFormat",function(datestr,pattern="YYYY-MM-DD HH:mm:ss"){
   return  moment(datestr).format(pattern)
 })
+//安装vue-pic-preview
+import VuePreview from 'vue-pic-preview'
+Vue.use(VuePreview)
 
 Vue.config.productionTip = false
 

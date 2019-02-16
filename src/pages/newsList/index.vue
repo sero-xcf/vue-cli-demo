@@ -30,7 +30,7 @@ export default {
     methods:{
         getNewsList(){
           this.$http.get("getnewslist").then(result=>{
-              console.log(result)
+            //   console.log(result)
               this.newsList = result.body.message
           })
         }
