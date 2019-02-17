@@ -12,7 +12,7 @@
 
 		</div>
         <ul class="photo-list">
-          <router-link v-for="item in photoList" :key="item.id" :to="'/home/photoInfo/'+item.id" tag="li">
+          <router-link v-for="(item,index) in photoList" :key="index" :to="'/home/photoInfo/'+item.id" tag="li">
               <img v-lazy="item.img_url">
               <div class="info">
                   <h1 class="info-title">{{item.title}}</h1>

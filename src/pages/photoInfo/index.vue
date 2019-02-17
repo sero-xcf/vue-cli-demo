@@ -6,7 +6,7 @@
            <span>点击{{ photoInfo.click}}次</span>  
        </p>
        <hr>
-
+     
        <!-- 缩略图区域 -->
        <div class="thumbs">
              <img class="preview-img" v-for="(item, index) in list" :src="item.src" height="100" @click="$preview.open(index, list)" :key="index"/>
@@ -17,6 +17,7 @@
 
        <!-- 放置一个现成的子组件 -->
       <cmt-box :id="this.id"></cmt-box>
+  
     </div>
 </template>
 <script>

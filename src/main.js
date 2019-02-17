@@ -16,6 +16,10 @@ import "./libs/mui/css/mui.css"
 import "./libs/mui/css/icons-extra.css"
 import { Button } from 'mint-ui';
 
+//全局注册组件
+import swiper from "./components/swiper.vue"
+Vue.component("swiper",swiper)
+
 Vue.component(Button.name, Button);
 
 import { Header } from 'mint-ui';
