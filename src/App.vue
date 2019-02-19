@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <mt-header fixed title="电商项目"></mt-header>
+    <mt-header fixed title="vue项目"></mt-header>
 		<transition name="app">
 		   <router-view/>
 		</transition>

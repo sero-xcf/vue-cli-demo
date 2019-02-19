@@ -49,7 +49,7 @@
                 <mt-button type="primary" size="large" plain @click="goDesc(id)">图文介绍</mt-button>
                 <mt-button type="danger" size="large" plain @click="goComment(id)">商品评论</mt-button>
             </div>
-        </div>
+        </div>·
     </div>
 </template>
 <script>
@@ -91,7 +91,13 @@ export default {
     },
     addToShopCar() {
         
-      this.ballFlag = !this.ballFlag;
+      this.ballFlag = !this.ballFlag
+      this.$store.commit("addToCar",{
+        id:this.goodsInfo.id,
+        count:this.buyCount,
+        price:this.goodsInfo.sell_price,
+        selected:true
+      })
     },
     beforeEnter: function(el) {
       el.style.transform="translate(0,0)";
