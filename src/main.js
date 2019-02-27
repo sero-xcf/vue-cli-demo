@@ -19,9 +19,11 @@ import { Button } from 'mint-ui';
 // 安装vuex
 import Vuex from "vuex"
 Vue.use(Vuex)
+//页面加载时获取
+ let car =JSON.parse(localStorage.getItem("key") || "[]") 
 let store =new Vuex.Store({
   state:{
-   car:[]//id price count selected
+   car:car//id price count selected
   },
   mutations:{
     addToCar(state,goodsInfo){
@@ -49,11 +51,78 @@ let store =new Vuex.Store({
           state.car.push(goodsInfo)
         }else{
           state.car[index].count += parseInt(goodsInfo.count) 
-        }     
+        }
+        //数据变化 存在本地缓存中
+        localStorage.setItem("key",JSON.stringify(state.car))     
+    },
+    //这里的goodsInfo只要有count和id即可
+    updateCount(state,goodsInfo){
+      state.car.some(item=>{
+        if(item.id===goodsInfo.id){
+          item.count =goodsInfo.count
+          return true
+        }
+      })
+      localStorage.setItem("key",JSON.stringify(state.car))  
+    },
+    removeFormCar(state,id){
+      state.car.some((item,i)=>{
+        if(item.id === id){
+          state.car.splice(i,1)
+          return true
+        }
+      })
+      localStorage.setItem("key",JSON.stringify(state.car))  
+    },
+    updateGoodsSelected(state,info){
+      state.car.some(item=>{
+        if(item.id === info.id){
+          item.selected = !info.selected
+          return true
+        }
+      })
+      localStorage.setItem("key",JSON.stringify(state.car))  
     }
+    
   },
   getters:{
-
+    totalCount(state){
+      let sum = 0
+      state.car.forEach(item=>{
+          sum +=  item.count 
+      })
+      return sum
+    },
+    
+    goodsCount(state){
+      let o ={}
+      state.car.forEach(item=>{
+        o[item.id] = item.count
+      })
+      return o
+    },
+    goodsSelected(state){
+      let o ={}
+      state.car.forEach(item=>{
+        o[item.id] = item.selected
+      })
+      return o
+    },
+    goodsCountAndAmount(state){
+      let o ={
+        count:0, //数量
+        amount:0 //总价
+      }
+      state.car.forEach(item=>{
+        if(item.selected){
+          o.count += item.count,
+          o.amount += item.price * item.count
+        }
+   
+      })
+      return o
+    }
+    
   }
 })
 
